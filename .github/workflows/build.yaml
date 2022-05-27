@@ -16,12 +16,14 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: nightly
+      # install meson
       - run: sudo pip3 install meson
+      # install ninja
       - run: sudo apt-get install ninja-build
       - run: meson setup builddir
       - run: cat builddir/build.ninja
       - run: meson compile -C builddir
-      # - run: cargo build --release
+      - run: cargo build --release
       # - uses: actions/upload-artifact@v3
       #   with:
       #     name: gtk-qq
