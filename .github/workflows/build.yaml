@@ -18,10 +18,7 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: nightly
-      # update meson
-      - run: sudo pip3 install meson
-      # install ninja
-      - run: sudo apt-get install ninja-build
+      - run: sudo apt-get install meson ninja-build pango
       - run: meson setup builddir
       - run: meson compile -C builddir
       - run: cargo build --release
