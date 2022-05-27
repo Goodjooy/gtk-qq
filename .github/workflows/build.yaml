@@ -15,21 +15,21 @@ jobs:
     #   image: ghcr.io/gtk-rs/gtk4-rs/gtk4:latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: nightly
-      # update meson
-      - run: sudo pip3 install meson
-      - run: sudo apt update
-      # install ninja
-      - run: sudo apt-get install ninja-build
+      # - uses: actions-rs/toolchain@v1
+      #   with:
+      #     toolchain: nightly
+      # # update meson
+      # - run: sudo pip3 install meson
+      # - run: sudo apt update
+      # # install ninja
+      # - run: sudo apt-get install ninja-build
       - run: sudo apt-get install glib2.0
       - run: sudo apt-get install libgtk2.0
       - run: sudo apt-get install glib2
-      - run: meson setup builddir
-      - run: cat builddir/build.ninja
-      - run: meson compile -C builddir
-      - run: cargo build --release
+      # - run: meson setup builddir
+      # - run: cat builddir/build.ninja
+      # - run: meson compile -C builddir
+      # - run: cargo build --release
       # - uses: actions/upload-artifact@v3
       #   with:
       #     name: gtk-qq
