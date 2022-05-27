@@ -18,6 +18,7 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: nightly
+      - run: sudo apt-get update
       - run: sudo apt-get install meson ninja-build libgtk-4-dev
       - run: meson setup builddir
       - run: meson compile -C builddir
