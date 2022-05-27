@@ -11,15 +11,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/gtk-rs/gtk4-rs/gtk4:latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: nightly
-      # install meson
+      # update meson
       - run: sudo pip3 install meson
-      # install ninja
-      - run: sudo apt-get install ninja-build
       - run: meson setup builddir
       - run: cat builddir/build.ninja
       - run: meson compile -C builddir
@@ -28,3 +28,6 @@ jobs:
       #   with:
       #     name: gtk-qq
       #     path: target/release/gtk-qq
+
+
+    
