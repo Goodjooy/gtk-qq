@@ -16,7 +16,7 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: nightly
-      - run: apt install meson
+      - run: sudo apt-get install meson
       - run: meson setup builddir
       - run: cat builddir/build.ninja
       - run: meson compile -C builddir
