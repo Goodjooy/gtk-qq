@@ -17,6 +17,7 @@ jobs:
         with:
           toolchain: nightly
       - run: sudo pip3 install meson
+      - run: sudo apt-get install ninja
       - run: meson setup builddir
       - run: cat builddir/build.ninja
       - run: meson compile -C builddir
