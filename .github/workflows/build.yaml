@@ -16,10 +16,7 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: nightly
-      - uses: BSFishy/meson-build@v1.0.3
-        with:
-          action: compile
-      - run: ls
+      - run: sudo pip3 install meson
       - run: meson setup builddir
       - run: cat builddir/build.ninja
       - run: meson compile -C builddir
