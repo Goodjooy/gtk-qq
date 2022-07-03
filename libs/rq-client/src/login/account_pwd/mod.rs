@@ -2,40 +2,68 @@
 //! // init client
 //! let client  = Client::init();
 //! // send account and pwd to login
-//! let client = client.login_with_account_password(account,&password).await;
-//! // on captcha
-//! let client = client.on_captcha()
-//! // on device lock
-//! let client = client.on_device_lock()
+//! let mut  client = client.using_password()
 //!
+//! client.password_login(account,password).await
 //!
 //!
 //! ```
 //!
 
-use ricq::{Client, LoginResponse};
+pub mod login_finish_cycles;
+use std::sync::Arc;
+
+use ricq::{Client, RQError};
 
 use super::UnLoginClient;
 
 pub struct PwdLoginClient {
-    inner: Client,
-    resp: LoginResponse,
+    inner: Arc<Client>,
+    state: Option<LoginStep>,
+    finish: bool,
 }
 
 impl UnLoginClient {
-    pub async fn login_with_account_password(
-        self,
-        account: impl Into<i64>,
-        password: impl AsRef<str>,
-    ) -> ricq::RQResult<PwdLoginClient> {
-        let resp = self
-            .inner
-            .password_login(account.into(), password.as_ref())
-            .await?;
-
-        Ok(PwdLoginClient {
+    pub fn using_password(self) -> PwdLoginClient {
+        PwdLoginClient {
             inner: self.inner,
-            resp,
-        })
+            state: Some(LoginStep::Start),
+            finish: false,
+        }
+    }
+}
+
+pub type VerifyURL = String;
+pub type Message = String;
+pub type Status = u8;
+
+#[derive(Debug)]
+pub enum LoginStep {
+    Start,
+    NeedCaptcha(VerifyURL),
+    DeviceLock(Message, VerifyURL),
+    Unknown(Message, Status),
+    Deny(LoginDeny),
+    Finish,
+}
+
+#[derive(Debug)]
+pub enum LoginDeny {
+    AccountFrozen,
+    TooManySMSRequest,
+    RQError(RQError),
+}
+
+#[cfg(test)]
+mod test {
+    use std::io::stdin;
+
+    use ricq::device::Device;
+
+    use crate::login::UnLoginClient;
+
+    #[tokio::test]
+    async fn name() {
+
     }
 }
