@@ -1,0 +1,13 @@
+[package]
+name = "rq-client"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[dependencies]
+tokio = { version = "1", features = ["sync"] }
+
+[dependencies.ricq]
+git = "https://github.com/lz1998/ricq.git"
+# v0.1.10, master, 2022/06/08
+rev = "38fff7007cb51bc39acc30087c3f042031a38eda"
